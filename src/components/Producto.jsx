@@ -14,9 +14,9 @@ function Producto(props) {
                 <span className="producto-precio">Precio:{props.precio} €</span>
             </div>
 
-            <button className="btn-añadir">
+            {/*<button className="btn-añadir">
                 Añadir al carrito
-            </button>
+            </button>*/}
         </div>
     </>
   )

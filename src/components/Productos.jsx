@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Producto  from './Producto';
 import { useParams } from 'react-router-dom';
 
 function Productos() {
@@ -37,9 +38,10 @@ function Productos() {
   return (
     <div>
       <h2>Descubre los mejores Productos al mejor precio</h2>
-      {productos.map((p, index)=> <p key={index}> {p.nombre} - {p.precio}€  </p> )}
+      <div className="productos-container">
+        {productos.map((p, index)=> <Producto key={index} id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> )}
+      </div>
     </div>
-  
   );
 
 }

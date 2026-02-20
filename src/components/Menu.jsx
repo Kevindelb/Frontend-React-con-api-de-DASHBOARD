@@ -10,6 +10,7 @@ function Menu() {
       <li>
         <Link to="/categorias">Categorias</Link>
       </li>
+      
     </ul>
   </nav>
   );

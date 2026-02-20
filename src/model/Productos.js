@@ -3,6 +3,21 @@ class Productos{
     constructor() {
         this.urlAPI = 'http://localhost/Dashboard/apibotiga/apiProductos.php';
     }
+    async getProductosPorId(id){
+      try{
+        const response = await fetch(this.urlAPI + '?id=' + id);
+        if(!response.ok)  {
+          const errorObject = await response.json();
+          console.log(errorObject.error);
+          return;
+        }
+        const productos = await response.json();
+        return productos;
+      }catch(error){
+        console.log('Error al obtener producto por ID:', error);
+        return null;
+      }
+    }
 
     async getProductosPorCategoria(id) {
     

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Productos from '../model/Productos.js';
 import Producto from './Producto';
+import { Link } from 'react-router-dom';
 
 function ProductosdeCategoria() {
 // Utiliza useParams para obtener los parámetros de la URL
@@ -27,13 +28,21 @@ function ProductosdeCategoria() {
     <div>
       <h2>{ProductosCat[0]?ProductosCat[0].categoria_nombre:"Categoría desconocida"}</h2>
       <div className="productos-container">
-        {ProductosCat[0]?ProductosCat.map((p, index)=> <Producto key={index} id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> ):"No hay productos..." } 
+        {
+        
+        ProductosCat[0]?ProductosCat.map((p, index)=> 
+        
+        <Link  key={index} to={`/productoCompra/${p.id}`}>
+        <Producto key={index} id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> 
+        </Link>
+        )
+        :"No hay productos..." 
+        
+        } 
       </div>
     </div>
   
   );
-
 }
-
 
 export default ProductosdeCategoria;

@@ -5,6 +5,7 @@ import Menu from './components/Menu';
 import Productos from './components/Productos';
 import Categorias from './components/Categorias';
 import ProductosdeCategoria from './components/ProductodeCategoria';
+import ProductoCompra from './components/ProductoCompra';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/navbar" element={<Navbar />} />
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/categoria/:id" element={<ProductosdeCategoria />} />
+          <Route path="/productoCompra/:id" element={<ProductoCompra />} />
         </Routes>
       </div>
     </Router>
