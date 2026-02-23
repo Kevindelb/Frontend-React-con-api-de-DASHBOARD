@@ -1,47 +1,49 @@
 import { useEffect, useState } from 'react';
 import Producto  from './Producto';
-import { useParams } from 'react-router-dom';
+import ProductosModel from '../model/Productos.js';
+import { Link, useLocation } from 'react-router-dom';
 
 function Productos() {
-  // Utiliza useParams para obtener los parámetros de la URL
-
-  const urlAPI = 'http://localhost/Dashboard/apibotiga/apiProductos.php';
   const [productos, setProductos] = useState([]);
+  const location = useLocation();
+  const productosModel = new ProductosModel();
+  const queryParam = new URLSearchParams(location.search).get('search') || '';
+  const searchTerm = queryParam.trim().toLowerCase();
 
   const getProductos = async ()=>{
-
-    try{
-
-    const response = await fetch(urlAPI)
-
-      if(!response.ok)  {
-        const errorObject = await response.json();
-        console.log(errorObject.error);
-        return;
-      }
-
-      const productos = await response.json();
-      console.log(productos);
-      setProductos(productos)
-
-    }catch(error){
-      console.log('Error al obtener productos' , error);
-      return null;
-    }
+    const newProductos = await productosModel.getProductos();
+    setProductos(newProductos || []);
   };
+
   useEffect(()=>{
     console.log("useffect")    
     getProductos()
   },[]);
+
+  const productosFiltrados = searchTerm
+    ? productos.filter((p) => p.nombre?.toLowerCase().includes(searchTerm))
+    : productos;
   
 
   return (
-    <div>
-      <h2>Descubre los mejores Productos al mejor precio</h2>
+    <section className="content-section">
+      <h2 className="section-title">Descubre los mejores productos al mejor precio</h2>
+      {searchTerm && (
+        <p className="search-results-info">
+          Resultados para: "{queryParam}" ({productosFiltrados.length})
+        </p>
+      )}
       <div className="productos-container">
-        {productos.map((p, index)=> <Producto key={index} id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> )}
+        {productosFiltrados.map((p, index)=> (
+          <Link key={index} to={`/productoCompra/${p.id}`}>
+            <Producto id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} />
+          </Link>
+        ))}
       </div>
-    </div>
+      {searchTerm && productosFiltrados.length === 0 && (
+        <p>No se encontraron productos con ese nombre.</p>
+      )}
+    </section>
   );
 
 }

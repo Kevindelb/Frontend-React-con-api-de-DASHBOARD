@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Categorias() {
-  // Utiliza useParams para obtener los parámetros de la URL
-const urlAPI = 'http://localhost/Dashboard/apibotiga/apiCategorias.php';
+  const urlAPI = 'http://localhost/Dashboard/apibotiga/apiCategorias.php';
   const [categorias, setCategorias] = useState([]);
 
   const getCategorias = async ()=>{
@@ -32,15 +31,18 @@ const urlAPI = 'http://localhost/Dashboard/apibotiga/apiCategorias.php';
     getCategorias()
   },[]);
 
-   return (
-    <div>
-      <h2>Descubre los mejores Productos al mejor precio</h2>
-      {categorias.map((c, index)=><Link key={index} to={`/categoria/${c.id}`}> {c.nombre} </Link> ) } 
-      
-    </div>
-  
+  return (
+    <section className="content-section">
+      <h2 className="section-title">Categorias</h2>
+      <div className="category-grid">
+        {categorias.map((c, index) => (
+          <Link className="category-chip" key={index} to={`/categoria/${c.id}`}>
+            {c.nombre}
+          </Link>
+        ))}
+      </div>
+    </section>
   );
-
 }
 
 

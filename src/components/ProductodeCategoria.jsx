@@ -5,11 +5,8 @@ import Producto from './Producto';
 import { Link } from 'react-router-dom';
 
 function ProductosdeCategoria() {
-// Utiliza useParams para obtener los parámetros de la URL
-    const { id } = useParams();
-   
-    const [ProductosCat , setProductosCat] = useState([]);
-   
+  const { id } = useParams();
+  const [ProductosCat , setProductosCat] = useState([]);
 
     const productos = new Productos();
 
@@ -24,24 +21,23 @@ function ProductosdeCategoria() {
     getProductos()
   },[]);
 
-   return (
-    <div>
-      <h2>{ProductosCat[0]?ProductosCat[0].categoria_nombre:"Categoría desconocida"}</h2>
+  return (
+    <section className="content-section">
+      <h2 className="section-title">{ProductosCat[0] ? ProductosCat[0].categoria_nombre : "Categoria desconocida"}</h2>
       <div className="productos-container">
         {
         
         ProductosCat[0]?ProductosCat.map((p, index)=> 
         
         <Link  key={index} to={`/productoCompra/${p.id}`}>
-        <Producto key={index} id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> 
+        <Producto id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> 
         </Link>
         )
         :"No hay productos..." 
         
         } 
       </div>
-    </div>
-  
+    </section>
   );
 }
 
