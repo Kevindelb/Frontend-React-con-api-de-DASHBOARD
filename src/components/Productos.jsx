@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import Producto  from './Producto';
 import ProductosModel from '../model/Productos.js';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-function Productos() {
+function Productos({ onAddToCart }) {
   const [productos, setProductos] = useState([]);
   const location = useLocation();
   const productosModel = new ProductosModel();
+
   const queryParam = new URLSearchParams(location.search).get('search') || '';
+  
   const searchTerm = queryParam.trim().toLowerCase();
 
   const getProductos = async ()=>{
@@ -35,9 +37,15 @@ function Productos() {
       )}
       <div className="productos-container">
         {productosFiltrados.map((p, index)=> (
-          <Link key={index} to={`/productoCompra/${p.id}`}>
-            <Producto id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} />
-          </Link>
+          <Producto
+            key={index}
+            id={p.id}
+            img={p.img}
+            nombre={p.nombre}
+            descripcion={p.descripcion}
+            precio={p.precio}
+            onAdd={onAddToCart}
+          />
         ))}
       </div>
       {searchTerm && productosFiltrados.length === 0 && (

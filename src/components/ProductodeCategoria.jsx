@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Productos from '../model/Productos.js';
 import Producto from './Producto';
-import { Link } from 'react-router-dom';
 
-function ProductosdeCategoria() {
+function ProductosdeCategoria({ onAddToCart }) {
   const { id } = useParams();
   const [ProductosCat , setProductosCat] = useState([]);
 
@@ -28,10 +27,15 @@ function ProductosdeCategoria() {
         {
         
         ProductosCat[0]?ProductosCat.map((p, index)=> 
-        
-        <Link  key={index} to={`/productoCompra/${p.id}`}>
-        <Producto id={p.id} img={p.img} nombre={p.nombre} descripcion={p.descripcion} precio={p.precio} /> 
-        </Link>
+          <Producto
+            key={index}
+            id={p.id}
+            img={p.img}
+            nombre={p.nombre}
+            descripcion={p.descripcion}
+            precio={p.precio}
+            onAdd={onAddToCart}
+          />
         )
         :"No hay productos..." 
         

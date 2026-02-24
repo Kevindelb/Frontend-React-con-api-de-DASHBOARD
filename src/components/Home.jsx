@@ -1,10 +1,12 @@
+import Carrusel from './Carrusel';
+import Productos from './Productos';
 
-function Home() {
+function Home({ onAddToCart }) {
   return (
-    <div>
-      <h2>¡Bienvenido a la página de inicio!</h2>
-      <p>Texto de ejemplo para la página de inicio.</p>
-    </div>
+    <>
+      <Carrusel />
+      <Productos onAddToCart={onAddToCart} />
+    </>
   );
 }
 

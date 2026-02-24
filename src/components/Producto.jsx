@@ -1,25 +1,37 @@
-function Producto(props) {
+import { Link } from 'react-router-dom';
 
-  
+function Producto(props) {
   return (
     <>
-        <div className="producto-card">
+      <div className="producto-card">
+        <Link className="producto-link" to={`/productoCompra/${props.id}`}>
             <div className="producto-imagen-container">
-                <p>{props.id}</p>
-                <img src={props.img} alt={props.nombre} className="producto-imagen"></img>
+              <img src={props.img} alt={props.nombre} className="producto-imagen"></img>
             </div>
             <div className="producto-info">
-                <h3 className="producto-nombre">Nombre: {props.nombre}</h3>
-                <p className="producto-descripcion">Descripción: {props.descripcion}</p>
-                <span className="producto-precio">Precio:{props.precio} €</span>
+              <h3 className="producto-nombre">{props.nombre}</h3>
+              <p className="producto-descripcion"> {props.descripcion}</p>
+              <span className="producto-precio">{props.precio} €</span>
             </div>
+        </Link>
 
-            {/*<button className="btn-añadir">
-                Añadir al carrito
-            </button>*/}
-        </div>
+        <button
+          className="btn-anadir"
+          type="button"
+          onClick={() =>
+            props.onAdd?.({
+              id: props.id,
+              img: props.img,
+              nombre: props.nombre,
+              precio: props.precio,
+            })
+          }
+        >
+          Anadir al carrito
+        </button>
+      </div>
     </>
-  )
+  );
 }
 
-export default Producto
+export default Producto;

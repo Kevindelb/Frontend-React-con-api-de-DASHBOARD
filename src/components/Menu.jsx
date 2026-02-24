@@ -12,6 +12,9 @@ function Menu() {
         <li>
           <Link to="/">Campanas y ofertas</Link>
         </li>
+        <li>
+          <Link to="/contacto">Contacto</Link>
+        </li>
       </ul>
     </nav>
   );

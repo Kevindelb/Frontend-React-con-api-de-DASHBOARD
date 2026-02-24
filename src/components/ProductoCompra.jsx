@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ProductoCompra() {
+function ProductoCompra({ onAddToCart }) {
   const [producto, setProducto] = useState(null);
   const { id } = useParams();
 
@@ -37,13 +37,22 @@ function ProductoCompra() {
 
             <main className="producto-compra-info">
               <h1 className="producto-compra-titulo">{producto.nombre}</h1>
-              <p className="producto-compra-id">SKU: {producto.id}</p>
+              
+              <p className="producto-compra-categoria"> 4.5/5 ⭐ 100 opiniones </p>
+              <p className="producto-compra-id">Cod. Articulo : {producto.id}</p>
+              <p className="producto-compra-stock"> {producto.categoria} | {producto.categoria}</p>
               <p className="producto-compra-descripcion">{producto.descripcion}</p>
             </main>
 
             <aside className="producto-compra-panel">
               <p className="producto-compra-precio">{producto.precio} €</p>
-              <button className="producto-compra-btn">Anadir al carrito</button>
+              <button
+                className="producto-compra-btn"
+                type="button"
+                onClick={() => onAddToCart?.(producto)}
+              >
+                Anadir al carrito
+              </button>
               <ul className="producto-compra-beneficios">
                 <li>Envio gratis en pedidos seleccionados</li>
                 <li>Devolucion facil en 30 dias</li>

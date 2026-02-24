@@ -1,31 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import calzadoImg from '../assets/ImagenesCategorias/CalzadoSVG.jpg';
+import ropaImg from '../assets/ImagenesCategorias/RopaSVG.jpg';
+import accesoriosImg from '../assets/ImagenesCategorias/AccesoriosSVG.jpg';
+import CategoriasModel from '../model/Categorias.js';
 
 function Categorias() {
-  const urlAPI = 'http://localhost/Dashboard/apibotiga/apiCategorias.php';
   const [categorias, setCategorias] = useState([]);
+  const categoriasModel = new CategoriasModel();
+  const categoriasImagenes = {
+    calzado: calzadoImg,
+    ropa: ropaImg,
+    accesorios: accesoriosImg,
+  };
+
+  const normalizarCategoria = (nombre = '') =>
+    nombre
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
 
   const getCategorias = async ()=>{
-
-    try{
-
-    const response = await fetch(urlAPI)
-
-      if(!response.ok)  {
-        const errorObject = await response.json();
-        console.log(errorObject.error);
-        return;
-      }
-
-      const categorias = await response.json();
-      console.log(categorias);
-      setCategorias(categorias)
-
-    }catch(error){
-      console.log('Error al obtener productos' , error);
-      return null;
-    }
+    const nuevasCategorias = await categoriasModel.getCategorias();
+    setCategorias(nuevasCategorias || []);
   };
+  
   useEffect(()=>{
     console.log("useffect")    
     getCategorias()
@@ -37,7 +37,14 @@ function Categorias() {
       <div className="category-grid">
         {categorias.map((c, index) => (
           <Link className="category-chip" key={index} to={`/categoria/${c.id}`}>
-            {c.nombre}
+            {categoriasImagenes[normalizarCategoria(c.nombre)] && (
+              <img
+                className="category-image"
+                src={categoriasImagenes[normalizarCategoria(c.nombre)]}
+                alt={c.nombre}
+              />
+            )}
+            <span>{c.nombre}</span>
           </Link>
         ))}
       </div>
